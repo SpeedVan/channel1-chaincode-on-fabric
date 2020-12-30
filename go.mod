@@ -1,4 +1,4 @@
-module github.com/SpeedVan/channel1-chaincode-on-fabric-
+module github.com/SpeedVan/channel1-chaincode-on-fabric
 
 go 1.15
 
