@@ -28,8 +28,16 @@ type SmartContract struct {
 	contractapi.Contract
 }
 
+// InitLedger todo
+func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
+	fmt.Println("InitLedger")
+
+	return nil
+}
+
 // ExistsVA todo
 func (s *SmartContract) ExistsVA(ctx contractapi.TransactionContextInterface, id string) (bool, error) {
+	fmt.Println("ExistsVA")
 	assetJSON, err := ctx.GetStub().GetState(id)
 	if err != nil {
 		return false, fmt.Errorf("failed to read from world state: %v", err)
@@ -40,6 +48,7 @@ func (s *SmartContract) ExistsVA(ctx contractapi.TransactionContextInterface, id
 
 // CreateVA create voucher asset
 func (s *SmartContract) CreateVA(ctx contractapi.TransactionContextInterface, id string, issuer string, owner string, amount int64, contractHash string, invoiceHash string) error {
+	fmt.Println("CreateVA")
 	exists, err := s.ExistsVA(ctx, id)
 	if err != nil {
 		return err
@@ -67,6 +76,7 @@ func (s *SmartContract) CreateVA(ctx contractapi.TransactionContextInterface, id
 
 // DeleteVA todo delete voucher asset
 func (s *SmartContract) DeleteVA(ctx contractapi.TransactionContextInterface, id string) error {
+	fmt.Println("DeleteVA")
 	exists, err := s.ExistsVA(ctx, id)
 	if err != nil {
 		return err
@@ -80,6 +90,7 @@ func (s *SmartContract) DeleteVA(ctx contractapi.TransactionContextInterface, id
 
 // GetAllVA returns all voucher assets found in world state
 func (s *SmartContract) GetAllVA(ctx contractapi.TransactionContextInterface) ([]*VoucherAsset, error) {
+	fmt.Println("GetAllVA")
 	// range query with empty string for startKey and endKey does an
 	// open-ended query of all assets in the chaincode namespace.
 	resultsIterator, err := ctx.GetStub().GetStateByRange("", "")
