@@ -5,15 +5,17 @@ COPY ./ /go/src/github.com/channel1-chaincode-on-fabric
 WORKDIR /go/src/github.com/channel1-chaincode-on-fabric
 
 # Build application
-RUN go build -o chaincode -v .
+RUN sh build.sh
 
 # Production ready image
 # Pass the binary to the prod image
 FROM alpine:3.11 as prod
 
-COPY --from=build /go/src/github.com/channel1-chaincode-on-fabric/chaincode /app/chaincode
+COPY --from=build /go/src/github.com/channel1-chaincode-on-fabric/build/chaincode /app/chaincode
+
 
 USER 1000
 
 WORKDIR /app
-CMD ./chaincode
+# RUN chmod 777 ./chaincode
+CMD [ "chaincode" ]

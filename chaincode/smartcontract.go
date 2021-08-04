@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/golang/protobuf/ptypes"
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
@@ -56,13 +57,14 @@ func (s *SmartContract) CreateVA(ctx contractapi.TransactionContextInterface, id
 	if exists {
 		return fmt.Errorf("the asset %s already exists", id)
 	}
-
+	ts, _ := ctx.GetStub().GetTxTimestamp();
+	createDate, _	 := ptypes.Timestamp(ts);
 	asset := VoucherAsset{
 		ID:           id, // or invoiceHash
 		Issuer:       issuer,
 		Owner:        owner,
 		Amount:       amount,
-		CreateDate:   time.Now(),
+		CreateDate:   createDate,
 		ContractHash: contractHash,
 		InvoiceHash:  invoiceHash,
 	}
